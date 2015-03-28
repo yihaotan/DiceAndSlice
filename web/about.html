@@ -62,10 +62,10 @@
             <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
             <div class="collapse navbar-collapse navbar-ex1-collapse">
                 <ul class="nav navbar-nav side-nav">
-                    <li>
+                    <li class="active">
                         <a href="about.html"><i class="fa fa-fw fa-info"></i>About</a>
                     </li>
-                    <li class="active">
+                    <li class>
                         <a href="index.html"><i class="fa fa-fw fa-dashboard"></i>Dashboard</a>
                     </li>
                 
@@ -85,8 +85,7 @@
                 <div class="row">
                     <div class="col-lg-12">
                         <h1 class="page-header">
-                            2013 US Airline Carbon Emission 
-                            <a href= "javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset All</a>
+                            Background
                         </h1>
                        
                     </div>
@@ -96,6 +95,7 @@
                 <!-- /.row -->
 
                 <div class="row">
+                    
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-default">
                             <div class="panel-heading">
@@ -103,16 +103,17 @@
                                     <div class="col-xs-3">
                                         <i class="fa fa-plane fa-5x"></i>
                                     </div>
-                                    <div id='dc-airline-count' class="col-xs-9 text-right">
+                                    <div id='dc-emission-count' class="col-xs-9 text-right">
                                         <div class="huge">
                                         <span class='number-display'></span>
                                         </div>
-                                        <div>US Carriers (Number)</div>
+                                        <div>Total US Carriers</div>
                                     </div>
                                 </div>
                             </div>
                         </div>
                     </div>
+                    
                     <div class="col-lg-3 col-md-6">
                         <div class="panel panel-red">
                             <div class="panel-heading">
@@ -124,7 +125,7 @@
                                         <div class="huge">
                                         <span class='number-display'></span>
                                         </div>
-                                        <div> Emission (Tonnes)</div>
+                                        <div>Total Emission</div>
                                     </div>
                                 </div>
                             </div>
@@ -141,7 +142,7 @@
                                         <div class="huge">
                                         <span class='number-display'></span>
                                         </div>
-                                        <div> Distance (Km)</div>
+                                        <div>Total Distance</div>
                                     </div>
                                 </div>
                             </div>
@@ -158,7 +159,7 @@
                                         <div class="huge">
                                         <span class='number-display'></span>
                                         </div>
-                                        <div> Profit (USD)</div>
+                                        <div>Total Profit</div>
                                     </div>
                                 </div>
                             </div>
@@ -166,80 +167,31 @@
                     </div>
                 </div>
                 <!-- /.row -->
-               
+
                 <!-- /.row -->
-                <div class='row'>
-                    <div class="col-lg-12">
-                        <div class="panel panel-default">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i>International and Domestic flights Donut Chart <a href="#" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
-                                </a> 
-                                    <a href="javascript:airlineEmissionChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset</a>        
-                                </h3>
-                            </div>
-                            <div class="panel-body">
-                               <div id='#'></div>
-                            </div>
-                        </div>
-                    </div> 
-                </div>
                 <div class="row">
                 <div class="col-lg-12">
-                    <div class="panel panel-red">
+                    <div class="panel panel-primary">
                         <div class="panel-heading">
-                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Emission By Airline Column Chart <a href="#dc-airline-emission" data-toggle="collapse" class="btn btn-sm btn-default minimize-box">
-                                    <i class="fa fa-minus fa-fw"></i>
-                                </a> 
-                                <a href="javascript:airlineEmissionChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset</a>        
+                            <h3 class="panel-title"><i class="fa fa-info"></i> About 
+                                      
                             </h3>
                         </div>
                         <div class="panel-body">
-                            
-                            <div id="dc-airline-emission"></div>
-                          
+                            <div id="#">Type Something Put some pic ..</div>
                        </div>
-                    </div>
-                    
+                    </div> 
                 </div>
                 </div>    
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-yellow">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-circle fa-fw"></i> Emission vs Distance by Airline Bubble Chart <a href="#dc-airline-bubble" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
-                                </a>
-                                    <span><a href="javascript:airlineBubbleChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset </a>    
-                                    </span></h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id="dc-airline-bubble"></div>
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <div class="row">
-                    <div class="col-lg-12">
-                        <div class="panel panel-green">
-                            <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-line-chart fa-fw"></i>Profit Sensitivity Analysis by Airline Composite Line Chart <a href="#dc-airline-compositeLine" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
-                                </a>
-                                       
-                                </h3>
-                            </div>
-                            <div class="panel-body">
-                                <div id='dc-airline-compositeLine'></div>
-                            </div>
-                                
-                        </div>
-                        </div>
-                </div>
                 
-            </div>
+                    
+                   
+               
                 <!-- /.row -->
 
             </div>
             <!-- /.container-fluid -->
-
+        </div>
         </div>
         <!-- /#page-wrapper -->
 
@@ -256,9 +208,10 @@
     <script src="js/dc.js"></script>
     <script src="main.js"></script>
     <script>
-        generateCharts();
+        //generateCharts();
 
     </script>
 </body>
 
 </html>
+
