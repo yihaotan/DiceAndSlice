@@ -20,7 +20,38 @@
         <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
         <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
     <![endif]-->
+    <style>
+          .d3-tip {
+                line-height: 1;
+                font-weight: bold;
+                padding: 12px;
+                background: rgba(0, 0, 0, 0.8);
+                color: #fff;
+                border-radius: 8px;
+            }
+
+            /* Creates a small triangle extender for the tooltip */
+            .d3-tip:after {
+                box-sizing: border-box;
+                display: inline;
+                font-size: 10px;
+                width: 100%;
+                line-height: 1;
+                color: rgba(0, 0, 0, 0.8);
+                content: "\25BC";
+                position: absolute;
+                text-align: center;
+            }
+
+            /* Style northward tooltips differently */
+            .d3-tip.n:after {
+                margin: -1px 0 0 0;
+                top: 100%;
+                left: 0;
+            }
+    </style>
 </head>
+
 
 <body>
     
@@ -311,6 +342,7 @@
     <script src="js/bootstrap.min.js"></script>
     <script src="js/d3.v3.min.js"></script>
     <script src="http://d3js.org/colorbrewer.v1.min.js"></script>
+    <script src="js/d3.tip.v0.6.3.js"></script>
     <script src="js/crossfilter.js"></script>
     <script src="js/dc.js"></script>
     <script src="main.js"></script>

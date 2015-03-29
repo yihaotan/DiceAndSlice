@@ -1,5 +1,5 @@
 function generateCharts(){
-    
+    var numberFormat = d3.format(",.0f");	
     airlineEmissionChart = dc.barChart('#dc-airline-emission');
     airlineBubbleChart = dc.bubbleChart('#dc-airline-bubble');
     airlineDistanceChart = dc.barChart('#dc-airline-distance');
@@ -262,19 +262,23 @@ function generateCharts(){
             });
         }
         
+       
+        
+        
         airlineEmissionChart.width(990)
                 .height(300)
                 .margins({top: 10, right: 10, bottom: 40, left: 70})
                 .dimension(airlineEmissionDimension)
+                .xUnits(dc.units.ordinal)
                 .group(airlineEmissionGroup)
                 .transitionDuration(10)
                 .xAxisLabel('Airlines') 
                 .yAxisLabel('Emission / Tonnes')
                 .renderHorizontalGridLines(true)
-                .renderTitle(true)
-                .title(function (d) {
-                    return  d.key + ": " + d.value;
-                })
+                .renderTitle(false)
+                //.title(function (d) {
+                    //return  d.key + ": " + d.value;
+                //})
                 .colors(d3.scale.ordinal().domain(["0-25", "26-50", "51-75", "75-100"]).range(colorbrewer.Reds[4]))
                 .colorAccessor(function (d) {
                     if (d.value < emissionArray[10]) {
@@ -290,10 +294,26 @@ function generateCharts(){
                 .outerPadding([1])
                 .x(d3.scale.ordinal().domain(airlineEmissionDomain))
                 .elasticY(true)
-                .xUnits(dc.units.ordinal)
+                 .renderlet(function(chart){
+                    
+                    chart.selectAll(".bar").call(barTip);
+                        chart.selectAll(".bar").on("mouseover", barTip.show)
+                                .on("mouseleave", barTip.hide);
+                    }) 
+             
+                
                 .xAxis().tickFormat();
         //airlineEmissionChart.onClick = function() {};
         //plot airline distance chart
+         var barTip = d3.tip()
+                        .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function (d) {
+                        return "<span style='color: #c6dbef'>" + d.data.key + "</span> : " + numberFormat(d.y)
+                     
+                    });
+        
+        
         airlineDistanceChart.width(990)
             .height(300)
             .margins({top: 10, right: 0, bottom: 40, left:70})
@@ -322,6 +342,13 @@ function generateCharts(){
                     }
                     return "75-100";
             })
+            .renderlet(function(chart){
+                   
+                    chart.selectAll(".bar").call(barTip);
+                        chart.selectAll(".bar").on("mouseover", barTip.show)
+                                .on("mouseleave", barTip.hide);
+                    }) 
+             
             .elasticY(true)
             .xAxis().tickFormat();
             
@@ -382,10 +409,26 @@ function generateCharts(){
             .label(function (p) {
                 return p.key;
             })
-            .renderTitle(true) 
+            .renderTitle(false) 
             .title(function(d){
                 return d.key+": "+"Profit: "+d.value.profit;
-            });
+            })
+           .renderlet(function(chart){
+                    var bubbleTip = d3.tip()
+                        .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function (d) {
+                        return "<span style='color: #c6dbef'> Airline </span> : " + d.key+"<br>"+
+                               "<span style='color: #c6dbef'> Profit </span> : $" + numberFormat(d.value.profit) + "<br>"+
+                               "<span style='color: #c6dbef'> Emission </span> : " + numberFormat(d.value.emission) + "<br>"+
+                               "<span style='color: #c6dbef'> Distance </span> : " + numberFormat(d.value.distance) + "<br>"+
+                               "<span style='color: #c6dbef'> Emission / Distance Ratio</span> : " + Math.round(d.value.ratio) ;
+                    });
+                    chart.selectAll(".bubble").call(bubbleTip);
+                        chart.selectAll(".bubble").on("mouseover", bubbleTip.show)
+                                .on("mouseleave", bubbleTip.hide);
+                    }) 
+             
             
             
         airlineProfitChart = dc.lineChart(airlineCompositeChart)
