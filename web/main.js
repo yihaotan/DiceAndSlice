@@ -4,8 +4,8 @@ function generateCharts(){
     airlineBubbleChart = dc.bubbleChart('#dc-airline-bubble');
     airlineDistanceChart = dc.barChart('#dc-airline-distance');
     airlineCompositeChart = dc.compositeChart('#dc-airline-compositeLine');
-    //airlineProfitChart = dc.lineChart("#dc-airline-profitChart");
-    //airlineTaxChart = dc.lineChart("#dc-airline-taxChart");
+    dataTable = dc.dataTable("#dc-table-graph");
+   
     var tier1Limit = 5717 * 1000;
     var tier2Limit = 27301 * 1000;
     var tier3Limit = 60983 * 1000;
@@ -228,8 +228,10 @@ function generateCharts(){
             distanceCount = dc.numberDisplay('#dc-distance-count');
             var distanceSum = 0;
             var airlineArray =[];
+           
             distanceCount.group(bubbleGroup).valueAccessor(function(d){
                 airlineArray = airlineEmissionDimension.top('Infinity');
+               
                 for (var i =0 ; i < airlineArray.length; i++){
                     distanceSum += (airlineDistanceMap[airlineArray[i].airlineKey]);
                
@@ -243,6 +245,7 @@ function generateCharts(){
             var airlineArray = [];
             emissionCount.group(bubbleGroup).valueAccessor(function(d){
                 airlineArray = airlineEmissionDimension.top('Infinity');
+               
                 for (var i=0; i <airlineArray.length; i++){
                     emissionSum += (airlineEmissionMap[airlineArray[i].airlineKey]);
                 }
@@ -261,9 +264,6 @@ function generateCharts(){
                 return profitSum;
             });
         }
-        
-       
-        
         
         airlineEmissionChart.width(990)
                 .height(300)
@@ -300,8 +300,6 @@ function generateCharts(){
                         chart.selectAll(".bar").on("mouseover", barTip.show)
                                 .on("mouseleave", barTip.hide);
                     }) 
-             
-                
                 .xAxis().tickFormat();
         //airlineEmissionChart.onClick = function() {};
         //plot airline distance chart
@@ -312,7 +310,16 @@ function generateCharts(){
                         return "<span style='color: #c6dbef'>" + d.data.key + "</span> : " + numberFormat(d.y)
                      
                     });
-        
+       var bubbleTip = d3.tip()
+                        .attr('class', 'd3-tip')
+                    .offset([-10, 0])
+                    .html(function (d) {
+                        return "<span style='color: #c6dbef'> Airline </span> : " + d.key+"<br>"+
+                               "<span style='color: #c6dbef'> Profit </span> : $" + numberFormat(d.value.profit) + "<br>"+
+                               "<span style='color: #c6dbef'> Emission </span> : " + numberFormat(d.value.emission) + "<br>"+
+                               "<span style='color: #c6dbef'> Distance </span> : " + numberFormat(d.value.distance) + "<br>"+
+                               "<span style='color: #c6dbef'> Emission / Distance Ratio</span> : " + Math.round(d.value.ratio) ;
+                    });
         
         airlineDistanceChart.width(990)
             .height(300)
@@ -414,16 +421,7 @@ function generateCharts(){
                 return d.key+": "+"Profit: "+d.value.profit;
             })
            .renderlet(function(chart){
-                    var bubbleTip = d3.tip()
-                        .attr('class', 'd3-tip')
-                    .offset([-10, 0])
-                    .html(function (d) {
-                        return "<span style='color: #c6dbef'> Airline </span> : " + d.key+"<br>"+
-                               "<span style='color: #c6dbef'> Profit </span> : $" + numberFormat(d.value.profit) + "<br>"+
-                               "<span style='color: #c6dbef'> Emission </span> : " + numberFormat(d.value.emission) + "<br>"+
-                               "<span style='color: #c6dbef'> Distance </span> : " + numberFormat(d.value.distance) + "<br>"+
-                               "<span style='color: #c6dbef'> Emission / Distance Ratio</span> : " + Math.round(d.value.ratio) ;
-                    });
+                    
                     chart.selectAll(".bubble").call(bubbleTip);
                         chart.selectAll(".bubble").on("mouseover", bubbleTip.show)
                                 .on("mouseleave", bubbleTip.hide);
@@ -442,7 +440,7 @@ function generateCharts(){
             .colors("#e6550d");
             
         airlineAfterTaxChart = dc.lineChart(airlineCompositeChart)
-            .group(airlineAfterTaxGroup,"After-Tax Profit")
+            .group(airlineAfterTaxGroup,"Post-Tax Profit")
             .renderDataPoints({radius:3})
             .colors("#2ca25f");
             
@@ -467,7 +465,45 @@ function generateCharts(){
                 .compose([airlineProfitChart,airlineTaxChart,airlineAfterTaxChart])
                 .legend(dc.legend().x(220).y(280).itemWidth(95).legendWidth(600).horizontal(true))
        
-            
+        dataTable.width(990)
+             .height(300)
+             .dimension(airlineEmissionDimension)
+             .group(function(){
+                return "";
+             })
+             .size(10)
+             .columns([
+                function(d) {
+                    return   d.airlineKey;
+                },
+                 function(d) {
+                    return   d.airlineName;
+                },
+               
+                function(d) {
+                    return  "$"+numberFormat(d.profit);
+                },
+                function(d) {
+                    return "$"+numberFormat(d.tax);
+                },
+                function(d){
+                    return "$"+numberFormat(d.afterTax);
+                },
+                function(d){
+                    return numberFormat(d.emission);
+                },
+                function(d) {
+                    return numberFormat(d.distance);
+                },
+                ])
+                .sortBy(function(d) {
+                        return d.emisson;
+                })
+                .order(d3.ascending);
+        
+        
+        
+        
         //bind the event
         airlineEmissionChart.on('filtered',function(){
             plotAirlineCount();
@@ -477,13 +513,13 @@ function generateCharts(){
             dc.redrawAll();
         });
         
-        airlineDistanceChart.on('filtered',function(){
+        /*airlineDistanceChart.on('filtered',function(){
             plotAirlineCount();
             plotDistanceCount();
             plotEmissionCount();
             plotProfitCount();
             dc.redrawAll();
-        });
+        });*./
         
         airlineBubbleChart.on('filtered',function(){
             plotAirlineCount();
