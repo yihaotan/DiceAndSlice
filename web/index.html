@@ -1,4 +1,4 @@
-<!DOCTYPE html>
+    <!DOCTYPE html>
 <html lang="en">
 
 <head>
@@ -86,8 +86,66 @@
                     <div class="col-lg-12">
                         <h1 class="page-header">
                             2013 US Airline Carbon Emission 
-                            <a href= "javascript:dc.filterAll(); dc.renderAll();" class="btn btn-primary">Reset All</a>
+                            <a href= "javascript:dc.filterAll(); dc.renderAll();" class="btn btn-danger">Reset All</a>
+                            <a href= "javascript:dc.filterAll();generateCharts();" class="btn btn-primary">Submit</a>
                         </h1>
+                    
+                        
+                        <div class="form-group" >
+                            <div class="row">
+                             <div class="col-lg-3 col-md-6">
+                                 <label>Tier 1 Emission Tax: </label>
+                                 <select id="tier1" class="form-control" >
+                                    <option value ="1">Default = $1 * Total Emission</option>
+                                    <option value="1">$1 * Total Emission</option>
+                                    <option value="2">$2 * Total Emission</option>
+                                    <option value="3">$3 * Total Emission</option>
+                                    <option value="4">$4 * Total Emission</option>
+                                    <option value ="5">$5 * Total Emission</option>
+                                </select>
+                               
+                            </div>
+                             
+                            <div class="col-lg-3 col-md-6">
+                                 <label>Tier 2 Emission Tax: </label>
+                                 <select id="tier2" class="form-control" >
+                                    <option value="1">Default = $1 * Total Emission</option>
+                                    <option value="1">$1 * Total Emission</option>
+                                    <option value="2">$2 * Total Emission</option>
+                                    <option value="3">$3 * Total Emission</option>
+                                    <option value="4">$4 * Total Emission</option>
+                                    <option value="5">$5 * Total Emission</option>
+                                </select>
+                               
+                            </div>
+                            
+                             <div class="col-lg-3 col-md-6">
+                                 <label>Tier 3 Emission Tax: </label>
+                                 <select id="tier3" class="form-control" >
+                                    <option value="1">Default = $1 * Total Emission</option>
+                                    <option value="1">$1 * Total Emission</option>
+                                    <option value="2">$2 * Total Emission</option>
+                                    <option value= "3">$3 * Total Emission</option>
+                                    <option value ="4">$4 * Total Emission</option>
+                                    <option value ="5">$5 * Total Emission</option>
+                                </select>
+                               
+                            </div>
+                             
+                            <div class="col-lg-3 col-md-6">
+                                 <label>Tier 4 Emission Tax: </label>
+                                 <select id="tier4" class="form-control" >
+                                     <option value="1">Default = $1 * Total Emission</option>
+                                    <option value=1>$1 * Total Emission</option>
+                                    <option value="2">$2 * Total Emission</option>
+                                    <option value="3">$3 * Total Emission</option>
+                                    <option value="4">$4 * Total Emission</option>
+                                    <option value="5">$5 * Total Emission</option>
+                                </select>
+                               
+                            </div> 
+                         </div>
+                      </div>
                        
                     </div>
                 </div>
@@ -158,7 +216,7 @@
                                         <div class="huge">
                                         <span class='number-display'></span>
                                         </div>
-                                        <div> Profit (USD)</div>
+                                        <div> Pre-Tax Profit (USD)</div>
                                     </div>
                                 </div>
                             </div>
@@ -168,20 +226,20 @@
                 <!-- /.row -->
                
                 <!-- /.row -->
-                <div class='row'>
+                <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-default">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-pie-chart fa-fw"></i>International and Domestic flights Donut Chart <a href="#" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
-                                </a> 
-                                    <a href="javascript:airlineEmissionChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset</a>        
-                                </h3>
+                                <h3 class="panel-title"><i class="fa fa-circle fa-fw"></i>Emission vs Distance by Airline Bubble Chart <a href="#dc-airline-bubble" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
+                                </a>
+                                    <span><a href="javascript:airlineBubbleChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset </a>    
+                                    </span></h3>
                             </div>
                             <div class="panel-body">
-                               <div id='#'></div>
+                                <div id="dc-airline-bubble"></div>
                             </div>
                         </div>
-                    </div> 
+                    </div>
                 </div>
                 <div class="row">
                 <div class="col-lg-12">
@@ -201,22 +259,23 @@
                     </div>
                     
                 </div>
-                </div>    
-                <div class="row">
+                </div>
+                <div class='row'>
                     <div class="col-lg-12">
                         <div class="panel panel-yellow">
                             <div class="panel-heading">
-                                <h3 class="panel-title"><i class="fa fa-circle fa-fw"></i> Emission vs Distance by Airline Bubble Chart <a href="#dc-airline-bubble" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
-                                </a>
-                                    <span><a href="javascript:airlineBubbleChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset </a>    
-                                    </span></h3>
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Distance by Airline Column Chart <a href="#dc-airline-distance" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
+                                </a> 
+                                    <a href="javascript:airlineDistanceChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset</a>        
+                                </h3>
                             </div>
                             <div class="panel-body">
-                                <div id="dc-airline-bubble"></div>
+                               <div id='dc-airline-distance'></div>
                             </div>
                         </div>
-                    </div>
+                    </div> 
                 </div>
+                
                 <div class="row">
                     <div class="col-lg-12">
                         <div class="panel panel-green">
