@@ -500,7 +500,7 @@ function generateCharts(){
                 .sortBy(function(d) {
                         return numberFormat(d.emission);
                 })
-               
+                .order(d3.ascending)
          //dataTable.ordering(function(d){d.value}) ;     
         
         
