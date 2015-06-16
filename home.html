@@ -1,0 +1,493 @@
+    <!DOCTYPE html>
+<html lang="en">
+
+<head>
+
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <meta name="description" content="">
+    <meta name="author" content="">
+
+    <title>Slice and Dice</title>
+    <link href="css/bootstrap.min.css" rel="stylesheet">
+    <link href="css/sb-admin.css" rel="stylesheet">
+    <link href="css/dc.css" rel="stylesheet">
+    <link href="font-awesome/css/font-awesome.min.css" rel="stylesheet" type="text/css">
+    <!-- HTML5 Shim and Respond.js IE8 support of HTML5 elements and media queries -->
+    <!-- WARNING: Respond.js doesn't work if you view the page via file:// -->
+    <!--[if lt IE 9]>
+        <script src="https://oss.maxcdn.com/libs/html5shiv/3.7.0/html5shiv.js"></script>
+        <script src="https://oss.maxcdn.com/libs/respond.js/1.4.2/respond.min.js"></script>
+    <![endif]-->
+    <style>
+          .d3-tip {
+                line-height: 1;
+                font-weight: bold;
+                padding: 12px;
+                background: rgba(0, 0, 0, 0.8);
+                color: #fff;
+                border-radius: 8px;
+            }
+
+            /* Creates a small triangle extender for the tooltip */
+            .d3-tip:after {
+                box-sizing: border-box;
+                display: inline;
+                font-size: 10px;
+                width: 100%;
+                line-height: 1;
+                color: rgba(0, 0, 0, 0.8);
+                content: "\25BC";
+                position: absolute;
+                text-align: center;
+            }
+
+            /* Style northward tooltips differently */
+            .d3-tip.n:after {
+                margin: -1px 0 0 0;
+                top: 100%;
+                left: 0;
+            }
+           
+    </style>
+</head>
+
+
+<body>
+    
+    <div id="wrapper">
+
+        <!-- Navigation -->
+        <nav class="navbar navbar-inverse navbar-fixed-top" role="navigation">
+            <!-- Brand and toggle get grouped for better mobile display -->
+            <div class="navbar-header">
+                <button type="button" class="navbar-toggle" data-toggle="collapse" data-target=".navbar-ex1-collapse">
+                    <span class="sr-only">Toggle navigation</span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                    <span class="icon-bar"></span>
+                </button>
+                <a class="navbar-brand" href="home.html"><i class="fa fa-cutlery"></i> Slice and Dice </a> 
+            </div>
+            <!-- Top Menu Items -->
+            <ul class="nav navbar-right top-nav">
+                <li class="dropdown">
+                    <a href="#" class="dropdown-toggle" data-toggle="dropdown"><i class="fa fa-user"></i> G1T4 <b class="caret"></b></a>
+                    <ul class="dropdown-menu">
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Boyang</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Jovin</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Wei Yin</a>
+                        </li>
+                        <li>
+                            <a href="#"><i class="fa fa-fw fa-user"></i> Yi Hao</a>
+                        </li>
+                    </ul>
+                </li>
+                
+            </ul>
+            <!-- Sidebar Menu Items - These collapse to the responsive navigation menu on small screens -->
+            <div class="collapse navbar-collapse navbar-ex1-collapse">
+                <ul class="nav navbar-nav side-nav">
+                    <li>
+                        <a href="about.html"><i class="fa fa-fw fa-info"></i>About</a>
+                    </li>
+                    <li class="active">
+                        <a href="home.html"><i class="fa fa-fw fa-dashboard"></i>Dashboard</a>
+                    </li>
+                
+                    
+                 </ul>
+            </div>
+            <!-- /.navbar-collapse -->
+        </nav>
+
+        <div id="page-wrapper">
+
+            <div class="container-fluid">
+
+                <!-- Page Heading -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <h1 class="page-header">
+                            2013 US Airline Carbon Emission 
+                            <a href= "javascript:dc.filterAll(); dc.renderAll();" class="btn btn-danger">Reset All</a>
+                            <a href= "javascript:generateCharts();" class="btn btn-primary">Submit</a>
+                        </h1>
+                    
+                        
+                        <div class="form-group" >
+                            <div class="row">
+                             <div class="col-lg-3 col-md-6">
+                                 <label>Tier 1 (0-25 p) Emission Tax: </label>
+                                 <select id="tier1" class="form-control" >
+                                    <option value ="1">Default = $1 * Total Emission</option>
+                                    <option value="1">$1 * Total Emission</option>
+                                    <option value="2">$2 * Total Emission</option>
+                                    <option value="3">$3 * Total Emission</option>
+                                    <option value="4">$4 * Total Emission</option>
+                                    <option value ="5">$5 * Total Emission</option>
+                                </select>
+                               
+                            </div>
+                             
+                            <div class="col-lg-3 col-md-6">
+                                 <label>Tier 2 (26-50 p) Emission Tax: </label>
+                                 <select id="tier2" class="form-control" >
+                                    <option value="1">Default = $1 * Total Emission</option>
+                                    <option value="1">$1 * Total Emission</option>
+                                    <option value="2">$2 * Total Emission</option>
+                                    <option value="3">$3 * Total Emission</option>
+                                    <option value="4">$4 * Total Emission</option>
+                                    <option value="5">$5 * Total Emission</option>
+                                </select>
+                               
+                            </div>
+                            
+                             <div class="col-lg-3 col-md-6">
+                                 <label>Tier 3 (51-75 p) Emission Tax: </label>
+                                 <select id="tier3" class="form-control" >
+                                    <option value="1">Default = $1 * Total Emission</option>
+                                    <option value="1">$1 * Total Emission</option>
+                                    <option value="2">$2 * Total Emission</option>
+                                    <option value= "3">$3 * Total Emission</option>
+                                    <option value ="4">$4 * Total Emission</option>
+                                    <option value ="5">$5 * Total Emission</option>
+                                </select>
+                               
+                            </div>
+                             
+                            <div class="col-lg-3 col-md-6">
+                                 <label>Tier 4 (76-100 p) Emission Tax: </label>
+                                 <select id="tier4" class="form-control" >
+                                     <option value="1">Default = $1 * Total Emission</option>
+                                    <option value=1>$1 * Total Emission</option>
+                                    <option value="2">$2 * Total Emission</option>
+                                    <option value="3">$3 * Total Emission</option>
+                                    <option value="4">$4 * Total Emission</option>
+                                    <option value="5">$5 * Total Emission</option>
+                                </select>
+                               
+                            </div> 
+                         </div>
+                      </div>
+                       
+                    </div>
+                </div>
+                <!-- /.row -->
+
+                <!-- /.row -->
+
+                <div class="row">
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-plane fa-5x"></i>
+                                    </div>
+                                    <div id='dc-airline-count' class="col-xs-9 text-right">
+                                        <div class="huge">
+                                        <span class='number-display'></span>
+                                        </div>
+                                        <div>US Carriers (Number)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-red">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-cloud fa-5x"></i>
+                                    </div>
+                                    <div id='dc-emission-count' class="col-xs-9 text-right">
+                                        <div class="huge">
+                                        <span class='number-display'></span>
+                                        </div>
+                                        <div> Emission (Tonnes)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-road fa-5x"></i>
+                                    </div>
+                                     <div id='dc-distance-count' class="col-xs-9 text-right">
+                                        <div class="huge">
+                                        <span class='number-display'></span>
+                                        </div>
+                                        <div> Distance (Km)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                    <div class="col-lg-3 col-md-6">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <div class="row">
+                                    <div class="col-xs-3">
+                                        <i class="fa fa-dollar fa-5x"></i>
+                                    </div>
+                                    <div id='dc-profit-count' class="col-xs-9 text-right">
+                                        <div class="huge">
+                                        <span class='number-display'></span>
+                                        </div>
+                                        <div> Pre-Tax Profit (USD)</div>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <!-- /.row -->
+               
+                <!-- /.row -->
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-default">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-circle fa-fw"></i>Emission vs Distance by Airline Bubble Chart <a href="#dc-airline-bubble" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
+                                </a>
+                                    <span><a href="javascript:airlineBubbleChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm" >Reset </a>
+                                          <a id="aboutbtn" class="btn btn-default btn-sm" >About </a>
+                                       
+                                    </span>  
+                                </h3>
+                               
+                            </div>
+                            <div class="panel-body">
+                                <div id="dc-airline-bubble"></div>
+                            </div>
+                        </div>
+                    </div>
+                </div>
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-red">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-bar-chart-o"></i>Emission By Airline Column Chart <a href="#dc-airline-emission" data-toggle="collapse" class="btn btn-sm btn-default minimize-box">
+                                    <i class="fa fa-minus fa-fw"></i>
+                                </a> 
+                                <a href="javascript:airlineEmissionChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset</a>
+                                <a id="aboutbtn1" class="btn btn-default btn-sm">About</a>
+                            </h3>
+                        </div>
+                        <div class="panel-body">
+                            
+                            <div id="dc-airline-emission"></div>
+                          
+                       </div>
+                    </div>
+                    
+                </div>
+                </div>
+                <div class='row'>
+                    <div class="col-lg-12">
+                        <div class="panel panel-yellow">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-bar-chart-o fa-fw"></i>Distance by Airline Column Chart <a href="#dc-airline-distance" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
+                                </a> 
+                                    <a href="javascript:airlineDistanceChart.filterAll();dc.redrawAll();" class="btn btn-default btn-sm">Reset</a>
+                                     <a id="aboutbtn2" class="btn btn-default btn-sm">About</a>
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                               <div id='dc-airline-distance'></div>
+                            </div>
+                        </div>
+                    </div> 
+                </div>
+                
+                <div class="row">
+                    <div class="col-lg-12">
+                        <div class="panel panel-green">
+                            <div class="panel-heading">
+                                <h3 class="panel-title"><i class="fa fa-line-chart fa-fw"></i>Profit Sensitivity Analysis by Airline Composite Line Chart <a href="#dc-airline-compositeLine" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
+                                </a>
+                                <a id="aboutbtn3" class="btn btn-default btn-sm">About</a>       
+                                </h3>
+                            </div>
+                            <div class="panel-body">
+                                <div id='dc-airline-compositeLine'></div>
+                            </div>
+                                
+                        </div>
+                        </div>
+                </div>
+                
+                <div class="row">
+                <div class="col-lg-12">
+                    <div class="panel panel-info">
+                        <div class="panel-heading">
+                            <h3 class="panel-title"><i class="fa fa-fw fa-table"></i>Data Table 
+                            <a href="#test" data-toggle="collapse" class="btn btn-sm btn-default minimize-box"><i class="fa fa-minus fa-fw"></i>
+                                </a>
+                                <a id="aboutbtn4" class="btn btn-default btn-sm">About</a>      
+                            </h3>
+                        </div>
+                        <div class="panel-body" >
+                                <div id="test">
+                                    <table id="dc-table-graph" class="table table-bordered table-hover table-striped">
+                                        <thead>
+                                            <tr>
+                                                <th>Airline ID</th>
+                                                <th>Airline Name</th>
+                                                <th>Pre-Tax Profit ($)</th>
+                                                <th>Tax ($)</th>
+                                                <th>Post-Tax Profit ($)</th>
+                                                <th>Emission (Tonnes)</th>
+                                                <th>Distance (Km)</th>
+                                                
+                                                
+                                             </tr>
+                                        </thead>
+                                    </table>
+                                </div>
+                       </div>
+                    </div> 
+                </div>
+                </div>    
+                
+            </div>
+                <!-- /.row -->
+
+            </div>
+            <!-- /.container-fluid -->
+
+        </div>
+        <!-- /#page-wrapper -->
+
+  
+    <!-- /#wrapper -->
+   
+    <div id="aboutbubble" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">About</h4>
+                    </div>
+                    <div class="modal-body">
+                       The bubble chart shows the correlation between the emission of CO2 by the airline and the distance travelled by the airline.
+                       The y-value indicates the the emission, the x-value indicates the distance, the radius indicates the efficiency (emission/distance)
+                       and the color indicates the profitability of the airline in 2013. The higher the efficiency, the smaller the size of the bubble. 
+                       Red represents loss and green represents profit.
+
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+     </div><!-- /.modal --><!-- /# -->
+     
+     <div id="aboutbubble1" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">About</h4>
+                    </div>
+                    <div class="modal-body">
+                       The column chart represents the total emission given out by each airline in 2013. The airlines are divided into 4 percentile based on the total emission produced. The higher the color intensity, the higher the emission quantile.
+                       The emission percentile will help the FAA to impose the different carbon tax. This is shown in the different emission tax tier dropdown at the top of the page.
+
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+     </div><!-- /.modal --><!-- /# -->
+     
+     <div id="aboutbubble2" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">About</h4>
+                    </div>
+                    <div class="modal-body">
+                       The column chart represents the total distance travelled by each airline in 2013. The airlines are divided into 4 percentiles based on the total distance travelled.The higher the color intensity, the higher the distance percentile. 
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+     </div><!-- /.modal --><!-- /# -->
+     
+     <div id="aboutbubble3" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">About</h4>
+                    </div>
+                    <div class="modal-body">
+                        The composite line chart represents the pre-tax, tax and post-tax of each airline in 2013. The pre-tax, tax and post-tax 
+                        are indicated by blue, red and green line respectively.
+
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+     </div><!-- /.modal --><!-- /# -->
+     
+     <div id="aboutbubble4" class="modal fade">
+            <div class="modal-dialog modal-sm">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+                        <h4 class="modal-title">About</h4>
+                    </div>
+                    <div class="modal-body">
+                        The data table shows the results of the filtered data. The fields are Airline ID, Airline Name, Pre-Tax Profit, Tax, Post-Tax Profit, Emission and Distance.
+
+                    </div>
+                    
+                    <div class="modal-footer">
+                        <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                    </div>
+                </div><!-- /.modal-content -->
+            </div><!-- /.modal-dialog -->
+     </div><!-- /.modal --><!-- /# -->
+     
+    <!-- jQuery -->
+    <script src="js/jquery.js"></script>
+    <!-- Bootstrap Core JavaScript -->
+    <script src="js/bootstrap.min.js"></script>
+    <script src="js/d3.v3.min.js"></script>
+    <script src="http://d3js.org/colorbrewer.v1.min.js"></script>
+    <script src="js/d3.tip.v0.6.3.js"></script>
+    <script src="js/crossfilter.js"></script>
+    <script src="js/dc.js"></script>
+    <script src="main.js"></script>
+    <script>
+        
+        generateCharts();
+        
+    </script>
+</body>
+
+</html>
