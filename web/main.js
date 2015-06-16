@@ -17,7 +17,7 @@ function generateCharts(){
     //count inconsistent (0) for the count not needed
     //color hardcode for bubblechart in dc.js
     //put legend for dc.js 
-     d3.csv('final.csv',function(data){
+     d3.csv('FINAL.csv',function(data){
         //read the csv file
         var emissionArray = [];
         var distanceArray = [];
@@ -294,10 +294,10 @@ function generateCharts(){
                 .xAxisLabel('Airlines') 
                 .yAxisLabel('Emission / Tonnes')
                 .renderHorizontalGridLines(true)
-                .renderTitle(false)
-                //.title(function (d) {
-                    //return  d.key + ": " + d.value;
-                //})
+                .renderTitle(true)
+                .title(function (d) {
+                    return  d.key + ": " + d.value;
+                })
                 .colors(d3.scale.ordinal().domain(["0-25", "26-50", "51-75", "75-100"]).range(colorbrewer.Reds[4]))
                 .colorAccessor(function (d) {
                     if (d.value < emissionArray[10]) {
