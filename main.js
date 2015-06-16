@@ -20,6 +20,8 @@ function generateCharts(){
     //color hardcode for bubblechart in dc.js
     //put legend for dc.js 
      d3.csv('FINAL.csv',function(data){
+
+        alert('inside here');
         //read the csv file
         var emissionArray = [];
         var distanceArray = [];
