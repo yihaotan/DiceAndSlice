@@ -13,6 +13,8 @@ function generateCharts(){
     var tier2Value = ($("#tier2 :selected").val());
     var tier3Value = ($("#tier3 :selected").val());
     var tier4Value = ($("#tier4 :selected").val());
+
+    alert('test');
     
     //count inconsistent (0) for the count not needed
     //color hardcode for bubblechart in dc.js
