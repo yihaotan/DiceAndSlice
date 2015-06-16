@@ -14,14 +14,13 @@ function generateCharts(){
     var tier3Value = ($("#tier3 :selected").val());
     var tier4Value = ($("#tier4 :selected").val());
 
-    alert('test');
+   
     
     //count inconsistent (0) for the count not needed
     //color hardcode for bubblechart in dc.js
     //put legend for dc.js 
      d3.csv('FINAL.csv',function(data){
 
-        alert('inside here');
         //read the csv file
         var emissionArray = [];
         var distanceArray = [];
