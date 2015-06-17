@@ -298,9 +298,6 @@ function generateCharts(){
                 .yAxisLabel('Emission / Tonnes')
                 .renderHorizontalGridLines(true)
                 .renderTitle(false)
-                .title(function (d) {
-                    return  d.key + ": " + d.value;
-                })
                 .colors(d3.scale.ordinal().domain(["0-25", "26-50", "51-75", "75-100"]).range(colorbrewer.Reds[4]))
                 .colorAccessor(function (d) {
                     if (d.value < emissionArray[10]) {
@@ -335,9 +332,6 @@ function generateCharts(){
             .yAxisLabel('Distance / Km')
             .renderHorizontalGridLines(true)
             .renderTitle(false)
-            .title(function (d) {
-                return  d.key + ": " + d.value;
-            })
             .barPadding(0.05)
             .outerPadding([1])
              .x(d3.scale.ordinal().domain(airlineDistanceDomain))
