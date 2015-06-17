@@ -294,7 +294,7 @@ function generateCharts(){
                 .xAxisLabel('Airlines') 
                 .yAxisLabel('Emission / Tonnes')
                 .renderHorizontalGridLines(true)
-                .renderTitle(true)
+                .renderTitle(false)
                 .title(function (d) {
                     return  d.key + ": " + d.value;
                 })
@@ -331,7 +331,7 @@ function generateCharts(){
             .xAxisLabel('Airlines') 
             .yAxisLabel('Distance / Km')
             .renderHorizontalGridLines(true)
-            .renderTitle(true)
+            .renderTitle(false)
             .title(function (d) {
                 return  d.key + ": " + d.value;
             })
